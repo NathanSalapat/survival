@@ -7,3 +7,11 @@ minetest.register_craft({
 			}
 })
 
+minetest.register_craft({
+		output = 'survival:barrel 1',
+		recipe = {
+			{'group:wood', 'default:tree', 'group:wood'},
+			{'group:wood', '', 'group:wood'},
+			{'group:wood', 'default:tree', 'group:wood'},
+			}
+})
