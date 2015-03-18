@@ -3,3 +3,9 @@ Started mod, added cotton recipe. Uploaded to GitHub
 
 3-11-15:
 Added Barrels.
+
+3-17-15:
+Added a few machetes and start working on the drinking part of the mod.
+
+3-18-15:
+Added another machete
