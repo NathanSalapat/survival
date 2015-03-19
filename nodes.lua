@@ -42,3 +42,41 @@ minetest.register_node('survival:barrel', {
 				" takes stuff from barrel at "..minetest.pos_to_string(pos))
 	end,
 })
+
+minetest.register_node(":default:dirt_with_grass", {
+	description = "Dirt with Grass",
+	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
+	is_ground_content = true,
+	groups = {crumbly=3,soil=1},
+	drop = {
+		max_items = 2,
+		items = {
+			{
+			items = {'survival:slug_raw'},
+			rarity = 30,
+			},
+			{
+			items = {'survival:cricket_raw'},
+			rarity = 30,
+			},
+			{
+			items = {'survival:worm_raw'},
+			rarity = 30,
+			},
+			{
+			items = {'survival:centipede_raw'},
+			rarity = 30,
+			},
+			{
+			items = {'survival:milipede_raw'},
+			rarity = 30,
+			},
+			{
+			items = {'default:dirt'},
+			},
+		},
+	},
+	sounds = default.node_sound_dirt_defaults({
+		footstep = {name="default_grass_footstep", gain=0.25},
+	}),
+})

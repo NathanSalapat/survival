@@ -44,6 +44,38 @@ minetest.register_tool('survival:machete_bronze', {
 			choppy = {times={[1]=2.50, [2]=1.40, [3]=1.00}, uses=30, maxlevel=2},
 			snappy = {times={[1]=2.5, [2]=1.20, [3]=0.35}, uses=40, maxlevel=2},
 		},
-		damage_grpups = {fleshy=5}
+		damage_groups = {fleshy=5}
 	},
+})
+
+-- Diamond Machete
+minetest.register_tool('survival:machete_diamond', {
+	description = 'diamond machete',
+	inventory_image = 'survival_machete_diamond.png',
+	tool_capabilities = {
+		full_punch_interval = 1,
+		max_drop_level = 1,
+		groupcaps = {
+			crumbly = {times={[1]=1.10, [2]=0.50, [3]=0.30}, uses=30, maxlevel=3},
+			choppy={times={[1]=2.10, [2]=0.90, [3]=0.50}, uses=30, maxlevel=2},
+			snappy={times={[1]=1.90, [2]=0.90, [3]=0.30}, uses=40, maxlevel=3},
+			},
+			damage_groups = {fleshy=6},
+		}
+})
+
+-- Mese Machete
+minetest.register_tool('survival:machete_mese', {
+	description = 'mese machete',
+	inventory_image = 'survival_machete_mese.png',
+	tool_capabilities = {
+		full_punch_interval = 1,
+		max_drop_level = 3,
+		groupcaps = {
+			crumbly = {times={[1]=1.20, [2]=0.60, [3]=0.30}, uses=20, maxlevel=3},
+			choppy={times={[1]=2.20, [2]=1.00, [3]=0.60}, uses=20, maxlevel=3},
+			snappy={times={[1]=2.0, [2]=1.00, [3]=0.35}, uses=30, maxlevel=3},
+			},
+			damage_groups = {fleshy=7},
+		}
 })

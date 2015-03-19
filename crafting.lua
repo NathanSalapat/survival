@@ -42,3 +42,63 @@ minetest.register_craft({
 			{'group:stick', '', ''},
 		}
 })
+
+minetest.register_craft({
+		output = 'survival:machete_diamond 1',
+		recipe = {
+			{'', '', 'default:diamond'},
+			{'', 'default:diamond', ''},
+			{'group:stick', '', ''},
+		}
+})
+
+minetest.register_craft({
+		output = 'survival:machete_mese 1',
+		recipe = {
+			{'', '', 'default:mese_crystal'},
+			{'', 'default:mese_crystal', ''},
+			{'group:stick', '', ''},
+		}
+})
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:slug_cooked',
+		recipe = 'survival:slug_raw',
+		cooktime = 1,
+		})
+		
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:cricket_cooked',
+		recipe = 'survival:cricket_raw',
+		cooktime = 1,
+		})
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:worm_cooked',
+		recipe = 'survival:worm_raw',
+		cooktime = 1,
+		})
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:centipede_cooked',
+		recipe = 'survival:centipede_raw',
+		cooktime = 1,
+		})
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:milipede_cooked',
+		recipe = 'survival:milipede_raw',
+		cooktime = 1,
+		})
+		
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:canteen_water_clean',
+		recipe = 'survival:canteen_water_dirty',
+		cooktime = 30, --boiling the water should take a long time.
+})
