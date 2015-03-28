@@ -8,4 +8,4 @@ Added Barrels.
 Added a few machetes and start working on the drinking part of the mod.
 
 3-18-15:
-Added another machete
+Added a couple more machetes. Created the forum topic. Added five bugs, some are poisonous, so be careful.

@@ -62,6 +62,21 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+		output = 'survival:sleeping_bag 1',
+		recipe = {
+		{'group:wool', 'group:wool', 'group:wool'}
+		}
+})
+
+minetest.register_craft({
+		output = 'survival:leafy_bed 1',
+		recipe = {
+		{'default:leaves', '', 'default:leaves'},
+		{'default:leaves', 'default:leaves', 'default:leaves'}
+		}
+})
+
+minetest.register_craft({
 		type = 'cooking',
 		output = 'survival:slug_cooked',
 		recipe = 'survival:slug_raw',

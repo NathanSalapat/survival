@@ -1,5 +1,5 @@
 minetest.register_craftitem('survival:energy_bar', {
-	description = 'energy_bar',
+	description = 'energy bar',
 	inventory_image = 'survival_energy_bar.png',
 	on_use = minetest.item_eat(10) -- Should also make you thirsty.
 })

@@ -1,2 +1,4 @@
 farming
 default
+wool
+beds
