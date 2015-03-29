@@ -86,8 +86,8 @@ minetest.register_node('survival:spigot', {
 	drawtype = 'mesh',
 	mesh = 'spigot.obj',
 	tiles = {'default_cobble.png'},
-	inventory_image = 'new_mod_suzanne.png',
-	groups = {choppy=2,dig_immediate=2,attached_node=1},
+--	inventory_image = 'new_mod_suzanne.png',
+	groups = {choppy=2, dig_immediate=2, attached_node=1},
 	paramtype = 'light',
 	paramtype2 = 'wallmounted',
 	selection_box = {
@@ -98,6 +98,54 @@ minetest.register_node('survival:spigot', {
 		type = 'fixed',
 		fixed = {-.5, -.5, -.3, .5, .15, .4}, -- Right, Bottom, Back, Left, Top, Front
 		},
+--[[ Trying to get the spigot to fill containers with sap.
+		on_construct = function(pos)
+		local timer = minetest.get_node_timer(pos)
+		local meta = minetest.get_meta(pos)
+		local inv = meta.get_inventory()
+		meta:set_size('bucket', 1)
+		meta:set_string('infotext', 'Needs a bucket to collect sap.')
+		meta:set_string('formspec',
+			'size[8,9]'..
+			'list[nodemeta:'..pos..';frames_filled;2,1;1,1;]'..
+			'list[current_player;main;0,5;8,4;]'			
+	end,
+	on_rightclick = function(pos, node, clicker, itemstack)
+		minetest.show_formspec(
+			clicker:get_player_name(),
+			'survival:spigot',
+			formspecs.survival:spigot(pos)
+		)
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		if inv:contains_item('bucket:bucket_empty') then
+			timer:start(30)
+			inv:set_stack('bucket', 'survival:spigot')
+			return
+		end
+	end
+		else
+			meta:set_string('infotext', 'something is going on, not sure what though.')
+			timer:stop()
+		end
+	end,
+]]
+
+	after_place_node = function(pos, placer, itemstack)
+			local n = minetest.get_node_or_nil(pos) --get the location of the placed node
+			if not n or not n.param2 then
+				minetest.remove_node(pos)
+				return true
+			end
+			local dir = minetest.facedir_to_dir(n.param2) --figure out what direction the node is facing
+			local p = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z}
+			local n2 = minetest.get_node_or_nil(p)
+			local def = minetest.registered_items[n2.name] or nil
+			if not n2 or not def or not def.buildable_to then --remove the node if it shouldn't be placeable.
+				minetest.remove_node(pos)
+				return true
+			end
+		end,
 })
 
 minetest.register_node('survival:sleeping_bag', {
@@ -133,7 +181,8 @@ minetest.register_node('survival:sleeping_bag', {
 		end,
 	on_rightclick = function(pos, node, clicker)
 			beds.on_rightclick(pos, clicker)
---			player:set_hp(-1)
+--			local health = clicker:get_hp()
+--			clicker:set_hp(health-2)
 	end,
 })
 
@@ -196,4 +245,28 @@ minetest.register_node('survival:leafy_bed', {
 			beds.on_rightclick(pos, clicker)
 --			player:set_hp(-1)
 	end,
+})
+
+minetest.register_node('survival:sand_with_food', {
+		description = "Sand",
+	tiles = {"default_sand.png"},
+	is_ground_content = true,
+	groups = {crumbly=3, falling_node=1, sand=1, not_in_creative_inventory=1},
+	sounds = default.node_sound_sand_defaults(),
+		drop = {
+		max_items = 2,
+		items = {
+			{
+			items = {'survival:oyster_raw'},
+			rarity = 2,
+			},
+			{
+			items = {'survival:mussel_raw'},
+			rarity = 2,
+			},
+			{
+			items = {'default:sand'},
+			},
+			},
+		},
 })

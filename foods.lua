@@ -63,3 +63,27 @@ minetest.register_craftitem('survival:milipede_cooked', {
 	inventory_image = 'survival_milipede_cooked.png',
 	on_use = minetest.item_eat(-3)
 })
+
+minetest.register_craftitem('survival:oyster_raw', {
+	description = 'raw oyster',
+	inventory_image = 'survival_oyster_raw.png',
+	on_use = minetest.item_eat(.5)
+})
+
+minetest.register_craftitem('survival:oyster_cooked', {
+	description = 'cooked oyster',
+	inventory_image = 'survival_oyster_cooked.png',
+	on_use = minetest.item_eat(.6)
+})
+
+minetest.register_craftitem('survival:mussel_raw', {
+	description = 'raw mussel',
+	inventory_image = 'survival_mussel_raw.png',
+	on_use = minetest.item_eat(-.7)
+})
+
+minetest.register_craftitem('survival:mussel_cooked', {
+	description = 'cooked mussel',
+	inventory_image = 'survival_mussel_cooked.png',
+	on_use = minetest.item_eat(.6)
+})

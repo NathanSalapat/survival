@@ -9,3 +9,12 @@ Added a few machetes and start working on the drinking part of the mod.
 
 3-18-15:
 Added a couple more machetes. Created the forum topic. Added five bugs, some are poisonous, so be careful.
+
+3-25-15:
+Started work on the two new "beds". Added beds as a dependency and am using that code for the time being to handle sleeping.
+
+3-28-15:
+Added an ABM that changes some sand near water to survival:sand_with_food, which, as the name suggests, can contain some oysters or mussels. Added the oyster and mussels, along with their craft recipes. I'm debating over whether I should allow eating them raw in shell, or if they should have to be crafted out of the shell to eat raw, but left in shell to cook.
+
+3-29-15:
+Started working on the system for creating tree sap, and coding the options that only allow the spigot to be placed on a tree.

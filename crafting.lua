@@ -44,12 +44,9 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+		type = 'shapeless',
 		output = 'survival:machete_diamond 1',
-		recipe = {
-			{'', '', 'default:diamond'},
-			{'', 'default:diamond', ''},
-			{'group:stick', '', ''},
-		}
+		recipe = {'survival:machete_steel', 'default:diamond'},
 })
 
 minetest.register_craft({
@@ -65,7 +62,7 @@ minetest.register_craft({
 		output = 'survival:sleeping_bag 1',
 		recipe = {
 		{'group:wool', 'group:wool', 'group:wool'}
-		}
+		},
 })
 
 minetest.register_craft({
@@ -115,5 +112,22 @@ minetest.register_craft({
 		type = 'cooking',
 		output = 'survival:canteen_water_clean',
 		recipe = 'survival:canteen_water_dirty',
-		cooktime = 30, --boiling the water should take a long time.
+		cooktime = 30,
 })
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:oyster_cooked',
+		recipe = 'survival:oyster_raw',
+		cooktime = 3,
+		replacements = {{'survival:oyster_raw', 'survival:shell'}},
+})
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:mussel_cooked',
+		recipe = 'survival:mussel_raw',
+		cooktime = 3,
+		replacements = {{'survival:mussel_raw', 'survival:shell'}},
+})
+
