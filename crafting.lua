@@ -74,6 +74,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+		output = 'survival:energy_bar 1',
+		recipe = {
+		{'default:apple', 'default:apple', 'default:apple'},
+		{'survival:sugar', 'survival:sugar', 'survival:sugar'},
+		{'farming:seed_wheat', 'farming:seed_wheat', 'farming:seed_wheat'},
+		}
+})
+
+minetest.register_craft({
 		type = 'cooking',
 		output = 'survival:slug_cooked',
 		recipe = 'survival:slug_raw',
@@ -131,3 +140,10 @@ minetest.register_craft({
 		replacements = {{'survival:mussel_raw', 'survival:shell'}},
 })
 
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:sugar',
+		recipe = 'survival:bucket_sap',
+		cooktime = 30,
+		replacements = {{'survival:bucket_sap', 'bucket:bucket_empty'}},
+})

@@ -7,6 +7,16 @@ local barrel_formspec =
 	"list[current_player;main;0,4.85;8,1;]"..
 	"list[current_player;main;0,6.08;8,3;8]"..
 	default.get_hotbar_bg(0,4.85)
+	
+local spigot_formspec = 
+	'size[8,9]'..
+	default.gui_bg..
+	default.gui_bg_img..
+	default.gui_slots..
+	"list[sap;main;2,4;1,1;]"..
+	"list[current_player;main;0,4.85;8,1;]"..
+	"list[current_player;main;0,6.08;8,3;8]"..
+	default.get_hotbar_bg(0,4.85)
 
 minetest.register_node('survival:barrel', {
 	description = 'Barrel',
@@ -17,7 +27,7 @@ minetest.register_node('survival:barrel', {
 	paramtype = 'light',
 	paramtype2 = 'facedir',
 	sounds = default.node_sound_wood_defaults(),
-		on_construct = function(pos)
+	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", barrel_formspec)
 		meta:set_string("infotext", "Barrel")
@@ -86,65 +96,45 @@ minetest.register_node('survival:spigot', {
 	drawtype = 'mesh',
 	mesh = 'spigot.obj',
 	tiles = {'default_cobble.png'},
---	inventory_image = 'new_mod_suzanne.png',
+--	inventory_image = 'placeholder.png',
 	groups = {choppy=2, dig_immediate=2, attached_node=1},
 	paramtype = 'light',
-	paramtype2 = 'wallmounted',
+	paramtype2 = 'facedir',
 	selection_box = {
 		type = 'fixed',
-		fixed = {-.5, -.5, -.3, .5, .15, .4}, -- Right, Bottom, Back, Left, Top, Front
+		fixed = {-.35, -.2, 0, .35, .5, .5}, -- Right, Bottom, Back, Left, Top, Front
 		},
 	collision_box = {
 		type = 'fixed',
-		fixed = {-.5, -.5, -.3, .5, .15, .4}, -- Right, Bottom, Back, Left, Top, Front
+		fixed = {-.35, -.2, 0, .35, .5, .5}, -- Right, Bottom, Back, Left, Top, Front
 		},
---[[ Trying to get the spigot to fill containers with sap.
-		on_construct = function(pos)
-		local timer = minetest.get_node_timer(pos)
+--[[ Currently this code crashes the game, not sure why
+	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		local inv = meta.get_inventory()
+--		local timer = minetest.get_node_timer(pos)
 		meta:set_size('bucket', 1)
 		meta:set_string('infotext', 'Needs a bucket to collect sap.')
-		meta:set_string('formspec',
-			'size[8,9]'..
-			'list[nodemeta:'..pos..';frames_filled;2,1;1,1;]'..
-			'list[current_player;main;0,5;8,4;]'			
-	end,
-	on_rightclick = function(pos, node, clicker, itemstack)
-		minetest.show_formspec(
-			clicker:get_player_name(),
-			'survival:spigot',
-			formspecs.survival:spigot(pos)
-		)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		if inv:contains_item('bucket:bucket_empty') then
-			timer:start(30)
-			inv:set_stack('bucket', 'survival:spigot')
-			return
-		end
-	end
-		else
-			meta:set_string('infotext', 'something is going on, not sure what though.')
-			timer:stop()
-		end
-	end,
-]]
+		meta:set_string('formspec', spigot_formspec)
+		local inv = meta.get_inventory()
+		inv:set_size('main', 1*1)
+	end,]]
 
 	after_place_node = function(pos, placer, itemstack)
-			local n = minetest.get_node_or_nil(pos) --get the location of the placed node
+			local n = minetest.get_node(pos) --get the location of the placed node
 			if not n or not n.param2 then
 				minetest.remove_node(pos)
 				return true
 			end
-			local dir = minetest.facedir_to_dir(n.param2) --figure out what direction the node is facing
-			local p = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z}
-			local n2 = minetest.get_node_or_nil(p)
-			local def = minetest.registered_items[n2.name] or nil
-			if not n2 or not def or not def.buildable_to then --remove the node if it shouldn't be placeable.
-				minetest.remove_node(pos)
-				return true
-			end
+			local dir = minetest.facedir_to_dir(n.param2)
+			local p1 = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z} --node placed on
+			local p2 = {x=pos.x+dir.x, y=pos.y+1, z=pos.z+dir.z} --node above previous
+			local n2 = minetest.get_node_or_nil(p1)
+			local n3 = minetest.get_node_or_nil(p2)
+				if n2.name and n3.name ~= 'default:tree' then
+					minetest.remove_node(pos)
+					return true
+					--TODO make the spigot place one node above the ground.
+				end
 		end,
 })
 
@@ -167,12 +157,12 @@ minetest.register_node('survival:sleeping_bag', {
 	after_place_node = function(pos, placer, itemstack)
 			local n = minetest.get_node_or_nil(pos) --get the location of the placed node
 			if not n or not n.param2 then
-				minetest.remove_node(pos)
+				minetest.remove_node(pos) --???
 				return true
 			end
 			local dir = minetest.facedir_to_dir(n.param2) --figure out what direction the node is facing
-			local p = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z}
-			local n2 = minetest.get_node_or_nil(p)
+			local p = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z}  --position
+			local n2 = minetest.get_node_or_nil(p)  --what node is next in line after the node we placed?
 			local def = minetest.registered_items[n2.name] or nil
 			if not n2 or not def or not def.buildable_to then --remove the node if it shouldn't be placeable.
 				minetest.remove_node(pos)
@@ -181,8 +171,8 @@ minetest.register_node('survival:sleeping_bag', {
 		end,
 	on_rightclick = function(pos, node, clicker)
 			beds.on_rightclick(pos, clicker)
---			local health = clicker:get_hp()
---			clicker:set_hp(health-2)
+			local health = clicker:get_hp() --should only damage if you sleep
+			clicker:set_hp(health-.5) --ya, like that last comment said.
 	end,
 })
 

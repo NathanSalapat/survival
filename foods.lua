@@ -87,3 +87,9 @@ minetest.register_craftitem('survival:mussel_cooked', {
 	inventory_image = 'survival_mussel_cooked.png',
 	on_use = minetest.item_eat(.6)
 })
+
+minetest.register_craftitem('survival:sugar', {
+	description = 'sugar',
+	inventory_image = 'survival_sugar.png',
+	on_use = minetest.item_eat(.75)
+})
