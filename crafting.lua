@@ -82,6 +82,15 @@ minetest.register_craft({
 		}
 })
 
+--[[minetest.register_craft({
+		output = 'survival:spigot 1',
+		recipe = {
+		{'', '', ''},
+		{'', '', ''},
+		{'', '', ''}
+		}
+})]]
+
 minetest.register_craft({
 		type = 'cooking',
 		output = 'survival:slug_cooked',

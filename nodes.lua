@@ -97,7 +97,7 @@ minetest.register_node('survival:spigot', {
 	mesh = 'spigot.obj',
 	tiles = {'default_cobble.png'},
 --	inventory_image = 'placeholder.png',
-	groups = {choppy=2, dig_immediate=2, attached_node=1},
+	groups = {choppy=2, dig_immediate=2,},
 	paramtype = 'light',
 	paramtype2 = 'facedir',
 	selection_box = {
@@ -108,17 +108,39 @@ minetest.register_node('survival:spigot', {
 		type = 'fixed',
 		fixed = {-.35, -.2, 0, .35, .5, .5}, -- Right, Bottom, Back, Left, Top, Front
 		},
---[[ Currently this code crashes the game, not sure why
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
---		local timer = minetest.get_node_timer(pos)
-		meta:set_size('bucket', 1)
-		meta:set_string('infotext', 'Needs a bucket to collect sap.')
-		meta:set_string('formspec', spigot_formspec)
-		local inv = meta.get_inventory()
-		inv:set_size('main', 1*1)
-	end,]]
-
+        on_construct = function(pos)
+			local timer = minetest.get_node_timer(pos)
+			local meta = minetest.env:get_meta(pos)
+			local inv = meta:get_inventory()
+			inv:set_size("main", 8*4)
+			inv:set_size('sap', 1)
+			meta:set_string("formspec",
+				"size[8,9]"..
+				"label[1,0;You need a bucket to collect sap.]" ..
+                "list[current_name;sap;1,1.5;1,1]"..
+                "list[current_player;main;0,5;8,4;]")
+			meta:set_string("infotext", "Sap Spigot")
+		end,
+		on_timer = function(pos, elapsed)
+			local meta = minetest.env:get_meta(pos)
+			local inv = meta:get_inventory()
+			local timer = minetest.get_node_timer(pos)
+			if inv:contains_item('sap', 'bucket:bucket_empty') then --make sure the bucket is still there
+				inv:set_stack('sap', 1,'survival:bucket_sap')
+				meta:set_string('infotext', 'bucket filled with sap, please replace.')
+				timer:stop()
+				return
+			end
+	end,
+	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+		local meta = minetest.env:get_meta(pos)
+		local inv = meta:get_inventory()
+		local timer = minetest.get_node_timer(pos)
+		if inv:contains_item('sap', 'bucket:bucket_empty') then
+			timer:start(60)
+			meta:set_string('infotext', 'gathering sap.. this could take a while.')
+			end
+	end,
 	after_place_node = function(pos, placer, itemstack)
 			local n = minetest.get_node(pos) --get the location of the placed node
 			if not n or not n.param2 then
@@ -128,9 +150,11 @@ minetest.register_node('survival:spigot', {
 			local dir = minetest.facedir_to_dir(n.param2)
 			local p1 = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z} --node placed on
 			local p2 = {x=pos.x+dir.x, y=pos.y+1, z=pos.z+dir.z} --node above previous
+			local p3 = {x=pos.x+dir.x, y=pos.y-1, z=pos.z+dir.z} --node below first
 			local n2 = minetest.get_node_or_nil(p1)
 			local n3 = minetest.get_node_or_nil(p2)
-				if n2.name and n3.name ~= 'default:tree' then
+			local n4 = minetest.get_node_or_nil(p3)
+				if n2.name and n3.name and n4.name ~= 'default:tree' then
 					minetest.remove_node(pos)
 					return true
 					--TODO make the spigot place one node above the ground.
