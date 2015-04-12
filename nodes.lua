@@ -43,16 +43,7 @@ minetest.register_node('survival:barrel', {
 	end,
 })
 
-minetest.register_node(":default:dirt_with_grass", {
-	description = "Dirt with Grass",
-	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
-	is_ground_content = true,
-	groups = {crumbly=3,soil=1},
-	soil = {
-		base = "default:dirt_with_grass",
-		dry = "farming:soil",
-		wet = "farming:soil_wet"
-		},
+minetest.override_item('default:dirt_with_grass',{
 	drop = {
 		max_items = 2,
 		items = {
@@ -81,9 +72,6 @@ minetest.register_node(":default:dirt_with_grass", {
 			},
 		},
 	},
-	sounds = default.node_sound_dirt_defaults({
-		footstep = {name="default_grass_footstep", gain=0.25},
-	}),
 })
 --This will probably need to be a few nodes to show the states it can be in.
 minetest.register_node('survival:spigot', {
@@ -141,6 +129,13 @@ minetest.register_node('survival:spigot', {
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string('infotext', 'You need a bucket to collect sap.')
 	end,
+	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+		if listname == 'sap' then
+			if stack:get_name() == ('bucket:bucket_empty') then
+				return 1
+			end
+		end
+	end,
 	after_place_node = function(pos, placer, itemstack)
 		local n = minetest.get_node(pos) --get the location of the placed node
 		if not n or not n.param2 then
@@ -195,8 +190,8 @@ minetest.register_node('survival:sleeping_bag', {
 		end,
 	on_rightclick = function(pos, node, clicker)
 			beds.on_rightclick(pos, clicker)
-			local health = clicker:get_hp() --should only damage if you sleep
-			clicker:set_hp(health-.5) --ya, like that last comment said.
+--			local health = clicker:get_hp() --should only damage if you sleep
+--			clicker:set_hp(health-.5) --ya, like that last comment said.
 	end,
 })
 
