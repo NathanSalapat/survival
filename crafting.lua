@@ -82,14 +82,32 @@ minetest.register_craft({
 		}
 })
 
---[[minetest.register_craft({
+minetest.register_craft({
 		output = 'survival:spigot 1',
 		recipe = {
-		{'', '', ''},
-		{'', '', ''},
-		{'', '', ''}
+		{'default:clay', '', ''},
+		{'default:clay', 'group:stick', ''},
+		{'default:clay', '', 'group:stick'}
 		}
-})]]
+})
+
+minetest.register_craft({
+		output = 'survival:well_bottom 1',
+		recipe = {
+		{'default:cobble', 'default:cobble', 'default:cobble'},
+		{'default:cobble', 'farming:cotton', 'default:cobble'},
+		{'default:cobble', 'default:cobble', 'default:cobble'},
+		}
+})
+
+minetest.register_craft({
+		output = 'survival:well_top 1',
+		recipe = {
+		{'', 'group:wood', ''},
+		{'group:wood', 'farming:cotton', 'group:wood'},
+		{'group:stick', 'farming:cotton', 'group:stick'},
+		}
+})
 
 minetest.register_craft({
 		type = 'cooking',

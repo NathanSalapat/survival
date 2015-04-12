@@ -1,5 +1,9 @@
 4-11-15:
-Spigots are working!!! They can only be placed on tree trunks, and need a bucket to collect sap. Right now you just have the infotexts to give you statuses. Placing a bucket in the spigot will trigger a timer that will replace the empty bucket with a sap filled bucket. Cook the sap filled bucket to get sugar. Collection and cooking times will probably be tweaked yet. I want to add a graphic to the spigot that shows whether the bucket is placed and is empty or full, but I don't know if I can do that without creating three nodes.
+Spigots are working!!! They can only be placed on tree trunks, and need a bucket to collect sap. Right now you just have the infotexts to give you statuses. Placing a bucket in the spigot will trigger a timer that will replace the empty bucket with a sap filled bucket. Cook the sap filled bucket to get sugar. Collection and cooking times will probably be tweaked yet. I want to add a graphic to the spigot that shows whether the bucket is placed and is empty or full, but I don't know if I can do that without creating three nodes. Updated the spigot model and texture.
+Crafting recipe is 
+c
+cs
+c s where c is clay and s is group stick
 
 4-9-15:
 Spigots now only place on tree trunks, though they have to be on the ground, not one node above the ground, not sure why...

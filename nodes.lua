@@ -7,16 +7,6 @@ local barrel_formspec =
 	"list[current_player;main;0,4.85;8,1;]"..
 	"list[current_player;main;0,6.08;8,3;8]"..
 	default.get_hotbar_bg(0,4.85)
-	
-local spigot_formspec = 
-	'size[8,9]'..
-	default.gui_bg..
-	default.gui_bg_img..
-	default.gui_slots..
-	"list[sap;main;2,4;1,1;]"..
-	"list[current_player;main;0,4.85;8,1;]"..
-	"list[current_player;main;0,6.08;8,3;8]"..
-	default.get_hotbar_bg(0,4.85)
 
 minetest.register_node('survival:barrel', {
 	description = 'Barrel',
@@ -58,6 +48,11 @@ minetest.register_node(":default:dirt_with_grass", {
 	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
 	is_ground_content = true,
 	groups = {crumbly=3,soil=1},
+	soil = {
+		base = "default:dirt_with_grass",
+		dry = "farming:soil",
+		wet = "farming:soil_wet"
+		},
 	drop = {
 		max_items = 2,
 		items = {
@@ -90,12 +85,12 @@ minetest.register_node(":default:dirt_with_grass", {
 		footstep = {name="default_grass_footstep", gain=0.25},
 	}),
 })
-
+--This will probably need to be a few nodes to show the states it can be in.
 minetest.register_node('survival:spigot', {
 	description = 'spigot',
 	drawtype = 'mesh',
 	mesh = 'spigot.obj',
-	tiles = {'default_cobble.png'},
+	tiles = {{name='default_wood.png'},{name='default_clay.png'}},
 --	inventory_image = 'placeholder.png',
 	groups = {choppy=2, dig_immediate=2,},
 	paramtype = 'light',
@@ -108,58 +103,63 @@ minetest.register_node('survival:spigot', {
 		type = 'fixed',
 		fixed = {-.35, -.2, 0, .35, .5, .5}, -- Right, Bottom, Back, Left, Top, Front
 		},
-        on_construct = function(pos)
-			local timer = minetest.get_node_timer(pos)
-			local meta = minetest.env:get_meta(pos)
-			local inv = meta:get_inventory()
-			inv:set_size("main", 8*4)
-			inv:set_size('sap', 1)
-			meta:set_string("formspec",
-				"size[8,9]"..
-				"label[1,0;You need a bucket to collect sap.]" ..
-                "list[current_name;sap;1,1.5;1,1]"..
-                "list[current_player;main;0,5;8,4;]")
-			meta:set_string("infotext", "Sap Spigot")
-		end,
-		on_timer = function(pos, elapsed)
-			local meta = minetest.env:get_meta(pos)
-			local inv = meta:get_inventory()
-			local timer = minetest.get_node_timer(pos)
-			if inv:contains_item('sap', 'bucket:bucket_empty') then --make sure the bucket is still there
-				inv:set_stack('sap', 1,'survival:bucket_sap')
-				meta:set_string('infotext', 'bucket filled with sap, please replace.')
-				timer:stop()
-				return
-			end
+    on_construct = function(pos)
+		local timer = minetest.get_node_timer(pos)
+		local meta = minetest.env:get_meta(pos)
+		local inv = meta:get_inventory()
+		inv:set_size("main", 8*4)
+		inv:set_size('sap', 1)
+		meta:set_string("formspec",
+			"size[8,9]"..
+			"label[1,0;You need a bucket to collect sap.]" ..
+               "list[current_name;sap;1,1.5;1,1]"..
+               "list[current_player;main;0,5;8,4;]")
+		meta:set_string("infotext", "Sap Spigot")
+	end,
+	on_timer = function(pos, elapsed)
+		local meta = minetest.env:get_meta(pos)
+		local inv = meta:get_inventory()
+		local timer = minetest.get_node_timer(pos)
+		if inv:contains_item('sap', 'bucket:bucket_empty') then --make sure the bucket is still there
+			inv:set_stack('sap', 1,'survival:bucket_sap')
+			meta:set_string('infotext', 'bucket filled with sap, please replace.')
+			timer:stop()
+			return
+		end
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.env:get_meta(pos)
 		local inv = meta:get_inventory()
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('sap', 'bucket:bucket_empty') then
-			timer:start(60)
+			timer:start(240)
 			meta:set_string('infotext', 'gathering sap.. this could take a while.')
-			end
+		end
+	end,
+	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+		local timer = minetest.get_node_timer(pos)
+		local meta = minetest.env:get_meta(pos)
+		meta:set_string('infotext', 'You need a bucket to collect sap.')
 	end,
 	after_place_node = function(pos, placer, itemstack)
-			local n = minetest.get_node(pos) --get the location of the placed node
-			if not n or not n.param2 then
+		local n = minetest.get_node(pos) --get the location of the placed node
+		if not n or not n.param2 then
+			minetest.remove_node(pos)
+			return true
+		end
+		local dir = minetest.facedir_to_dir(n.param2)
+		local p1 = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z} --node placed on
+		local p2 = {x=pos.x+dir.x, y=pos.y+1, z=pos.z+dir.z} --node above previous
+		local p3 = {x=pos.x+dir.x, y=pos.y-1, z=pos.z+dir.z} --node below first
+		local n2 = minetest.get_node_or_nil(p1)
+		local n3 = minetest.get_node_or_nil(p2)
+		local n4 = minetest.get_node_or_nil(p3)
+			if n2.name and n3.name and n4.name ~= 'default:tree' then
 				minetest.remove_node(pos)
 				return true
+				--TODO make the spigot place only one node above the ground.
 			end
-			local dir = minetest.facedir_to_dir(n.param2)
-			local p1 = {x=pos.x+dir.x, y=pos.y, z=pos.z+dir.z} --node placed on
-			local p2 = {x=pos.x+dir.x, y=pos.y+1, z=pos.z+dir.z} --node above previous
-			local p3 = {x=pos.x+dir.x, y=pos.y-1, z=pos.z+dir.z} --node below first
-			local n2 = minetest.get_node_or_nil(p1)
-			local n3 = minetest.get_node_or_nil(p2)
-			local n4 = minetest.get_node_or_nil(p3)
-				if n2.name and n3.name and n4.name ~= 'default:tree' then
-					minetest.remove_node(pos)
-					return true
-					--TODO make the spigot place one node above the ground.
-				end
-		end,
+	end,
 })
 
 minetest.register_node('survival:sleeping_bag', {
@@ -257,12 +257,11 @@ minetest.register_node('survival:leafy_bed', {
 		end,
 	on_rightclick = function(pos, node, clicker)
 			beds.on_rightclick(pos, clicker)
---			player:set_hp(-1)
 	end,
 })
 
 minetest.register_node('survival:sand_with_food', {
-		description = "Sand",
+	description = "Sand",
 	tiles = {"default_sand.png"},
 	is_ground_content = true,
 	groups = {crumbly=3, falling_node=1, sand=1, not_in_creative_inventory=1},
@@ -284,3 +283,46 @@ minetest.register_node('survival:sand_with_food', {
 			},
 		},
 })
+
+minetest.register_node('survival:well_bottom', {
+	description = 'well bottom',
+	drawtype = 'mesh',
+	mesh = 'survival_well_bottom.obj',
+	tiles = {'default_cobble.png'},
+	groups = {cracky=3, stone=2},
+	paramtype = 'light',
+	paramtype2 = 'facedir',
+	sounds = default.node_sound_stone_defaults(),
+	selection_box = {
+		type = 'fixed',
+		fixed = {-0.6, -0.5, -0.6, 0.6, .3, .6}, -- Right, Bottom, Back, Left, Top, Front
+		},
+	})
+
+minetest.register_node('survival:well_top', {
+	description = 'well top',
+	drawtype = 'mesh',
+	mesh = 'survival_well_top.obj',
+	tiles = {'default_wood.png'},
+	groups = {choppy=2,oddly_breakable_by_hand=2, attached_node=1},
+	paramtype = 'light',
+	paramtype2 = 'facedir',
+	selection_box = {
+		type = 'fixed',
+		fixed = {-0.6, -0.6, -0.6, 0.6, .4, .6}, -- Right, Bottom, Back, Left, Top, Front
+		},
+	after_place_node = function(pos, placer, itemstack)
+		local n = minetest.get_node(pos)
+		if not n or not n.param2 then
+			minetest.remove_node(pos)
+			return true
+		end
+		local dir = minetest.facedir_to_dir(n.param2)
+		local p = {x=pos.x, y=pos.y-1, z=pos.z}
+		local n2 = minetest.get_node_or_nil(p)
+		if n2.name ~= 'survival:well_bottom' then
+			minetest.remove_node(pos)
+			return true
+		end
+	end,
+	})
