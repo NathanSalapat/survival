@@ -6,4 +6,5 @@ minetest.register_craftitem('survival:shell', {
 minetest.register_craftitem('survival:bucket_sap', {
 	description = 'bucket with sap',
 	inventory_image = 'survival_bucket_sap.png',
+	stack_max = 1,
 })

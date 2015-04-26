@@ -7,7 +7,11 @@ minetest.register_craftitem('survival:energy_bar', {
 minetest.register_craftitem('survival:slug_raw', {
 	description = 'slug',
 	inventory_image = 'survival_slug_raw.png',
-	on_use = minetest.item_eat(-4)
+	on_use = function(pos, player)
+		local hp_gain = math.random(-4,1)
+		local hp = player:get_hp()
+		player:set_hp(hp + hp_gain)
+	end
 })
 
 minetest.register_craftitem('survival:slug_cooked', {
@@ -91,5 +95,5 @@ minetest.register_craftitem('survival:mussel_cooked', {
 minetest.register_craftitem('survival:sugar', {
 	description = 'sugar',
 	inventory_image = 'survival_sugar.png',
-	on_use = minetest.item_eat(.75)
+	on_use = minetest.item_eat(.1)
 })

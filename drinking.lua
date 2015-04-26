@@ -10,9 +10,9 @@ minetest.register_craftitem('survival:canteen_empty', {
 		on_use = function(itemstack, user, pointed_thing)
 			if string.find(minetest.get_node(pointed_thing.under).name, 'default:water_source')
 				then
-					local giving_back = 'survival:canteen_water_dirty',
-				else -- Do nothing	
-			end,		
+					local giving_back = 'survival:canteen_water_dirty'
+					end
+			end	
 })
 		
 --minetest.register_craft({
@@ -26,13 +26,17 @@ minetest.register_craftitem('survival:canteen_water_clean', {
 		description = 'clean drinking water',
 		inventory_image = 'survival_canteen_water_clean.png',
 		stack_max = 1,
-		on_use = minetest.item_eat(1, 'default:wood'),
+		on_use = minetest.item_eat(1, 'survival:canteen_empty'),
 })
 
 minetest.register_craftitem('survival:canteen_water_dirty', {
 		description = 'dirty water',
 		inventory_image = 'survival_canteen_water_dirty.png',
 		stack_max = 1,
-		on_use = minetest.item_eat((math.random(-2, 1)), 'default:wood'),
-
+		on_use = function(pos, player, itemstack)
+			local hp_gain = math.random(-5,1)
+			local hp = player:get_hp()
+			player:set_hp(hp + hp_gain)
+			return 'survival:canteen_empty'
+		end
 })

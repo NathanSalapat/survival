@@ -8,7 +8,7 @@ minetest.register_tool('survival:machete_wood', {
 		groupcaps=  { --how many times the tool can 'attack' nodes of a type.
 			crumbly = {times = {[1]=3.00, [2]=1.60, [3]=0.60}, uses=10, maxlevel=1}, --dirt like
 			choppy = {times = {[2]=3.00, [3]=1.60}, uses=10, maxlevel=1}, --woody
-			snappy = {times = {[2]=1.6, [3]=0.40}, uses=10, maxlevel=1}, --fleshy?
+			snappy = {times = {[2]=1.6, [3]=0.40}, uses=10, maxlevel=1},
 		},
 		damage_groups = {fleshy=2}, --damage delt to mobs and other players?
 	},
