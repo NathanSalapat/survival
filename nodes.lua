@@ -390,7 +390,7 @@ minetest.register_node('survival:well_top', {
 		end
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		local chance = math.random(1,2)
+		local chance = math.random(1,500)
 		if chance == 2 then
 		-- Let's change the formspec'
 			local meta = minetest.env:get_meta(pos)
