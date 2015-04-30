@@ -36,7 +36,12 @@ minetest.register_craftitem('survival:canteen_water_dirty', {
 		on_use = function(pos, player, itemstack)
 			local hp_gain = math.random(-5,1)
 			local hp = player:get_hp()
-			player:set_hp(hp + hp_gain)
-			return 'survival:canteen_empty'
+			if hp_gain <= 0 then
+				player:set_hp(hp + hp_gain)
+				return 'survival:canteen_empty'
+--			else
+				--drink was water with the thirsty mods API
+				--both the if and else statements should also trigger wear on the canteen.
+			end
 		end
 })

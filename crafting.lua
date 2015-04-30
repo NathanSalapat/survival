@@ -17,6 +17,12 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+		type = 'shapeless',
+		output = 'default:stick 9',
+		recipe = {'survival:barrel'}
+})
+
+minetest.register_craft({
 		output = 'survival:machete_wood 1',
 		recipe = {
 			{'', '', 'group:wood'},
@@ -110,6 +116,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+		output = 'survival:raw_kabob 1',
+		recipe = {
+		{'survival:mussel_raw', 'survival:mussel_raw', 'survival:mussel_raw'},
+		{'survival:oyster_raw', 'survival:oyster_raw', 'survival:oyster_raw'},
+		{'group:stick', '', ''},
+		}
+})
+
+minetest.register_craft({
 		type = 'cooking',
 		output = 'survival:slug_cooked',
 		recipe = 'survival:slug_raw',
@@ -173,4 +188,11 @@ minetest.register_craft({
 		recipe = 'survival:bucket_sap',
 		cooktime = 30,
 		replacements = {{'survival:bucket_sap', 'bucket:bucket_empty'}},
+})
+
+minetest.register_craft({
+		type = 'cooking',
+		output = 'survival:cooked_kabob',
+		recipe = 'survival:raw_kabob',
+		cooktime = 7,
 })

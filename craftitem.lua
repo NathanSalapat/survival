@@ -8,3 +8,4 @@ minetest.register_craftitem('survival:bucket_sap', {
 	inventory_image = 'survival_bucket_sap.png',
 	stack_max = 1,
 })
+

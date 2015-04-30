@@ -97,3 +97,15 @@ minetest.register_craftitem('survival:sugar', {
 	inventory_image = 'survival_sugar.png',
 	on_use = minetest.item_eat(.1)
 })
+
+minetest.register_craftitem('survival:raw_kabob', {
+	description = 'uncooked seafood kabob',
+	inventory_image = 'survival_raw_kabob.png',
+	on_use = minetest.item_eat(1)
+})
+
+minetest.register_craftitem('survival:cooked_kabob', {
+	description = 'seafood kabob',
+	inventory_image = 'survival_cooked_kabob.png',
+	on_use = minetest.item_eat(2.5)
+})

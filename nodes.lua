@@ -377,6 +377,10 @@ minetest.register_node('survival:well_top', {
 			inv:set_stack('pail', 1,'survival:canteen_water_dirty')
 			timer:stop()
 			return
+		elseif inv:contains_item('pail', 'thirsty:steel_canteen') then --make sure the canteen is still there
+			inv:set_stack('pail', 1,({name='thirsty:steel_canteen', wear=1,}))
+			timer:stop()
+			return
 		end
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
@@ -386,6 +390,8 @@ minetest.register_node('survival:well_top', {
 		if inv:contains_item('pail', 'bucket:bucket_empty') then
 			timer:start(7)
 		elseif inv:contains_item('pail', 'survival:canteen_empty') then
+			timer:start(6)
+		elseif inv:contains_item('pail', 'thirsty:steel_canteen') then
 			timer:start(6)
 		end
 	end,
@@ -413,6 +419,8 @@ minetest.register_node('survival:well_top', {
 			if stack:get_name() == ('bucket:bucket_empty') then
 				return 1
 			elseif stack:get_name() == ('survival:canteen_empty') then
+				return 1
+			elseif stack:get_name() == ('thirsty:steel_canteen') then
 				return 1
 			else
 				return 0

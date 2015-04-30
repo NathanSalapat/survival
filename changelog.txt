@@ -1,3 +1,6 @@
+4-29-15:
+Kabobs are here, craft with three mussels, three oysters, and a stick, once crafted enjoy raw, or cook for more health.
+
 4-25-15:
 Wells added, they require a hole in the ground three nodes deep to be placed on top. Just click on the inside of the hole, in the top node. They need to be placed in dirt. Right click on a well top and put in a bucket or canteen to get some water. The bucket will act exactly as any other bucket with water, the canteen with water can be cooked to purify and then be drank. Drinking dirty water can result in a loss of health.
 
