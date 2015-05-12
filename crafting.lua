@@ -158,13 +158,6 @@ minetest.register_craft({
 		recipe = 'survival:milipede_raw',
 		cooktime = 1,
 		})
-		
-minetest.register_craft({
-		type = 'cooking',
-		output = 'survival:canteen_water_clean',
-		recipe = 'survival:canteen_water_dirty',
-		cooktime = 30,
-})
 
 minetest.register_craft({
 		type = 'cooking',

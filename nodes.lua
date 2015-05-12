@@ -1,11 +1,11 @@
 local barrel_formspec =
-	"size[8,9]"..
+	'size[8,9]'..
 	default.gui_bg..
 	default.gui_bg_img..
 	default.gui_slots..
-	"list[current_name;main;0,0.3;8,4;]"..
-	"list[current_player;main;0,4.85;8,1;]"..
-	"list[current_player;main;0,6.08;8,3;8]"..
+	'list[current_name;main;0,0.3;8,4;]'..
+	'list[current_player;main;0,4.85;8,1;]'..
+	'list[current_player;main;0,6.08;8,3;8]'..
 	default.get_hotbar_bg(0,4.85)
 
 minetest.register_node('survival:barrel', {
@@ -19,27 +19,27 @@ minetest.register_node('survival:barrel', {
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", barrel_formspec)
-		meta:set_string("infotext", "Barrel")
+		meta:set_string('formspec', barrel_formspec)
+		meta:set_string('infotext', 'Barrel')
 		local inv = meta:get_inventory()
-		inv:set_size("main", 8*4)
+		inv:set_size('main', 8*4)
 	end,
 	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
-		return inv:is_empty("main")
+		return inv:is_empty('main')
 	end,
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		minetest.log("action", player:get_player_name()..
-				" moves stuff in barrel at "..minetest.pos_to_string(pos))
+		minetest.log('action', player:get_player_name()..
+				' moves stuff in barrel at '..minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		minetest.log("action", player:get_player_name()..
-				" moves stuff to barrel at "..minetest.pos_to_string(pos))
+		minetest.log('action', player:get_player_name()..
+				' moves stuff to barrel at '..minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		minetest.log("action", player:get_player_name()..
-				" takes stuff from barrel at "..minetest.pos_to_string(pos))
+		minetest.log('action', player:get_player_name()..
+				' takes stuff from barrel at '..minetest.pos_to_string(pos))
 	end,
 })
 
@@ -94,14 +94,14 @@ minetest.register_node('survival:spigot', {
     on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		local inv = meta:get_inventory()
-		inv:set_size("main", 8*4)
+		inv:set_size('main', 8*4)
 		inv:set_size('sap', 1)
-		meta:set_string("formspec",
-			"size[8,9]"..
-			"label[1,0;You need a bucket to collect sap.]" ..
-               "list[current_name;sap;1,1.5;1,1]"..
-               "list[current_player;main;0,5;8,4;]")
-		meta:set_string("infotext", "Sap Spigot")
+		meta:set_string('formspec',
+			'size[8,9]'..
+			'label[1,0;You need a bucket to collect sap.]' ..
+               'list[current_name;sap;1,1.5;1,1]'..
+               'list[current_player;main;0,5;8,4;]')
+		meta:set_string('infotext', 'Sap Spigot')
 	end,
 	on_timer = function(pos, elapsed)
 		local meta = minetest.env:get_meta(pos)
@@ -191,8 +191,6 @@ minetest.register_node('survival:sleeping_bag', {
 		end,
 	on_rightclick = function(pos, node, clicker)
 			beds.on_rightclick(pos, clicker)
---			local health = clicker:get_hp() --should only damage if you sleep
---			clicker:set_hp(health-.5) --ya, like that last comment said.
 	end,
 })
 
@@ -257,8 +255,8 @@ minetest.register_node('survival:leafy_bed', {
 })
 
 minetest.register_node('survival:sand_with_food', {
-	description = "Sand",
-	tiles = {"default_sand.png"},
+	description = 'Sand',
+	tiles = {'default_sand.png'},
 	is_ground_content = true,
 	groups = {crumbly=3, falling_node=1, sand=1, not_in_creative_inventory=1},
 	sounds = default.node_sound_sand_defaults(),
@@ -356,14 +354,14 @@ minetest.register_node('survival:well_top', {
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
 		local inv = meta:get_inventory()
-		inv:set_size("main", 8*4)
+		inv:set_size('main', 8*4)
 		inv:set_size('pail', 1)
-		meta:set_string("formspec",
-			"size[8,6]"..
-			"label[2,.5;You need something to gather water in.]" ..
-               "list[current_name;pail;1,.5;1,1]"..
-               "list[current_player;main;0,2;8,4;]")
-		meta:set_string("infotext", "Well")
+		meta:set_string('formspec',
+			'size[8,6]'..
+			'label[2,.5;You need something to gather water in.]' ..
+               'list[current_name;pail;1,.5;1,1]'..
+               'list[current_player;main;0,2;8,4;]')
+		meta:set_string('infotext', 'Well')
 	end,
 	on_timer = function(pos, elapsed)
 		local meta = minetest.env:get_meta(pos)
@@ -371,10 +369,6 @@ minetest.register_node('survival:well_top', {
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('pail', 'bucket:bucket_empty') then --make sure the bucket is still there
 			inv:set_stack('pail', 1,'bucket:bucket_water')
-			timer:stop()
-			return
-		elseif inv:contains_item('pail', 'survival:canteen_empty') then --make sure the canteen is still there
-			inv:set_stack('pail', 1,'survival:canteen_water_dirty')
 			timer:stop()
 			return
 		elseif inv:contains_item('pail', 'thirsty:steel_canteen') then --make sure the canteen is still there
@@ -389,36 +383,32 @@ minetest.register_node('survival:well_top', {
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('pail', 'bucket:bucket_empty') then
 			timer:start(7)
-		elseif inv:contains_item('pail', 'survival:canteen_empty') then
-			timer:start(6)
 		elseif inv:contains_item('pail', 'thirsty:steel_canteen') then
 			timer:start(6)
 		end
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		local chance = math.random(1,500)
+		local chance = math.random(1,2)
 		if chance == 2 then
 		-- Let's change the formspec'
 			local meta = minetest.env:get_meta(pos)
 			local inv = meta:get_inventory()
-			inv:set_size("main", 8*4)
+			inv:set_size('main', 8*4)
 			inv:set_size('pail', 0)
-			meta:set_string("formspec",
-			"size[8,6]"..
-			"label[2,.5;This well has dried up!]" ..
-               "list[current_player;main;0,2;8,4;]")
-            meta:set_string("infotext", "Dead Well")
+			meta:set_string('formspec',
+			'size[8,6]'..
+			'label[2,.5;This well has dried up!]' ..
+               'list[current_player;main;0,2;8,4;]')
+            meta:set_string('infotext', 'Dead Well')
             -- Now let's fill the well with dirt, so it has to be dug again.
-            minetest.set_node({x=pos.x, y=pos.y-2, z=pos.z},{name = 'default:dirt'})
-            minetest.set_node({x=pos.x, y=pos.y-3, z=pos.z},{name = 'default:dirt'})
-            minetest.set_node({x=pos.x, y=pos.y-4, z=pos.z},{name = 'default:dirt'})
+            for i=2,4 do
+				minetest.set_node({x=pos.x, y=pos.y-i, z=pos.z},{name = 'default:dirt'})
+				end
 		end
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		if listname == 'pail' then
 			if stack:get_name() == ('bucket:bucket_empty') then
-				return 1
-			elseif stack:get_name() == ('survival:canteen_empty') then
 				return 1
 			elseif stack:get_name() == ('thirsty:steel_canteen') then
 				return 1

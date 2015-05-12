@@ -1,13 +1,31 @@
-Hi, thanks for reading this.
+# Mod Contributors
+Nathan
 
-This mod aims to add several survival type aspects, from new foods, to tools, and new mechanics.
+# Survival
+This is a Minetest mod that adds survival related items
 
-Planned items include:
-Machete X
-Water Bottle x
-Thirst bar ? there is another mod that has this, I may just build off that mod and support it.
-Bugs/food X
-sleeping bags X
-leafy beds X
-barrels, like chests but barrel shapes X
+## Forum Topic
+https://forum.minetest.net/viewtopic.php?f=9&t=11517
 
+## Licensing
+CC0
+
+## Dependencies
+- farming
+- default
+- wool
+- beds
+- thirsty?
+
+
+#
+Items currently included:
+Machete
+Bugs/food
+Sleeping bags
+Leafy beds
+barrels, like chests but barrel shapes
+
+#
+Planned:
+Better integration with the Thirsty mod
