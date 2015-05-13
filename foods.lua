@@ -15,98 +15,34 @@ minetest.register_craftitem('survival:slug_raw', {
 	end
 })
 
-minetest.register_craftitem('survival:slug_cooked', {
-	description = 'cooked slug',
-	inventory_image = 'survival_slug_cooked.png',
-	on_use = minetest.item_eat(.25)
-})
+local food_table = { --craft, desc, invimg, health
+{'slug_cooked', 'cooked slug', 'slug_cooked', .25},
+{'cricket_raw', 'cricket', 'cricket_raw', .25},
+{'cricket_cooked', 'cooked cricket', 'cricket_cooked', .125},
+{'worm_raw', 'worm', 'worm_raw', .25},
+{'worm_cooked', 'cooked worm', 'worm_cooked', .125},
+{'centipede_raw', 'centipede', 'centipede_raw', .25},
+{'centipede_cooked', 'cooked centipede', 'centipede_cooked', .25},
+{'milipede_raw', 'milipede', 'milipede_raw', -4},
+{'milipede_cooked', 'cooked milipede', 'milipede_cooked', -3},
+{'oyster_raw', 'raw oyster', 'oyster_raw', .5},
+{'oyster_cooked', 'cooked oyster', 'oyster_cooked', .6},
+{'mussel_raw', 'raw mussel', 'mussel_raw', -.7},
+{'mussel_cooked', 'cooked mussel', 'mussel_cooked', .6},
+{'sugar', 'sugar', 'sugar', .1},
+{'raw_kabob', 'uncooked seafood kabob', 'raw_kabob', 1},
+{'cooked_kabob', 'seafood kabob', 'cooked_kabob', 2.5}
+}
 
-minetest.register_craftitem('survival:cricket_raw', {
-	description = 'cricket',
-	inventory_image = 'survival_cricket_raw.png',
-	on_use = minetest.item_eat(.25)
-})
+for i in ipairs (food_table) do
+	local craft = food_table[i][1]
+	local desc = food_table[i][2]
+	local invimg = food_table[i][3]
+	local health = food_table[i][4]
 
-minetest.register_craftitem('survival:cricket_cooked', {
-	description = 'cooked cricket',
-	inventory_image = 'survival_cricket_cooked.png',
-	on_use = minetest.item_eat(.125)
+minetest.register_craftitem('survival:'..craft, {
+	description = desc,
+	inventory_image = 'survival_'..invimg..'.png',
+	on_use = minetest.item_eat(health)
 })
-
-minetest.register_craftitem('survival:worm_raw', {
-	description = 'worm',
-	inventory_image = 'survival_worm_raw.png',
-	on_use = minetest.item_eat(.25)
-})
-
-minetest.register_craftitem('survival:worm_cooked', {
-	description = 'cooked worm',
-	inventory_image = 'survival_worm_cooked.png',
-	on_use = minetest.item_eat(.125)
-})
-
-minetest.register_craftitem('survival:centipede_raw', {
-	description = 'centipede',
-	inventory_image = 'survival_centipede_raw.png',
-	on_use = minetest.item_eat(.25)
-})
-
-minetest.register_craftitem('survival:centipede_cooked', {
-	description = 'cooked centipede',
-	inventory_image = 'survival_centipede_cooked.png',
-	on_use = minetest.item_eat(.25)
-})
-
-minetest.register_craftitem('survival:milipede_raw', {
-	description = 'milipede',
-	inventory_image = 'survival_milipede_raw.png',
-	on_use = minetest.item_eat(-4)
-})
-	
-minetest.register_craftitem('survival:milipede_cooked', {
-	description = 'cooked milipede',
-	inventory_image = 'survival_milipede_cooked.png',
-	on_use = minetest.item_eat(-3)
-})
-
-minetest.register_craftitem('survival:oyster_raw', {
-	description = 'raw oyster',
-	inventory_image = 'survival_oyster_raw.png',
-	on_use = minetest.item_eat(.5)
-})
-
-minetest.register_craftitem('survival:oyster_cooked', {
-	description = 'cooked oyster',
-	inventory_image = 'survival_oyster_cooked.png',
-	on_use = minetest.item_eat(.6)
-})
-
-minetest.register_craftitem('survival:mussel_raw', {
-	description = 'raw mussel',
-	inventory_image = 'survival_mussel_raw.png',
-	on_use = minetest.item_eat(-.7)
-})
-
-minetest.register_craftitem('survival:mussel_cooked', {
-	description = 'cooked mussel',
-	inventory_image = 'survival_mussel_cooked.png',
-	on_use = minetest.item_eat(.6)
-})
-
-minetest.register_craftitem('survival:sugar', {
-	description = 'sugar',
-	inventory_image = 'survival_sugar.png',
-	on_use = minetest.item_eat(.1)
-})
-
-minetest.register_craftitem('survival:raw_kabob', {
-	description = 'uncooked seafood kabob',
-	inventory_image = 'survival_raw_kabob.png',
-	on_use = minetest.item_eat(1)
-})
-
-minetest.register_craftitem('survival:cooked_kabob', {
-	description = 'seafood kabob',
-	inventory_image = 'survival_cooked_kabob.png',
-	on_use = minetest.item_eat(2.5)
-})
+end
