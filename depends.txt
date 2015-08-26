@@ -2,4 +2,4 @@ farming
 default
 wool
 beds
-thirsty?
+thirsty

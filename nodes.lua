@@ -172,7 +172,7 @@ minetest.register_node('survival:sleeping_bag', {
 		},
 	collision_box = {
 		type = 'fixed',
-		fixed = {-0.5, -0.5, -0.5, 0.5, -0.2, 1.5}, -- Right, Bottom, Back, Left, Top, Front
+		fixed = {-0.5, -0.5, -0.5, 0.5, -0.2, 1.5},
 		},
 	after_place_node = function(pos, placer, itemstack)
 			local n = minetest.get_node_or_nil(pos) --get the location of the placed node
@@ -305,7 +305,6 @@ minetest.register_node('survival:well_bottom', {
 		local n2 = minetest.get_node_or_nil(b2)
 		local n3 = minetest.get_node_or_nil(b3)
 		local def = minetest.registered_items[n2.name] or nil
-		print (n1.name, n2.name)
 		if not n1 and n2 or not def.buildable_to then --not really sure if this is the best code, but it works.
 			minetest.remove_node(pos)
 			return true
@@ -344,8 +343,6 @@ minetest.register_node('survival:well_top', {
 		local p2 = {x=pos.x, y=pos.y-2, z=pos.z}
 		local n2 = minetest.get_node_or_nil(p)
 		local n3 = minetest.get_node_or_nil(p2)
-		print (n2.name)
-		print (n3.name)
 		if n3.name ~= 'air' or n2.name ~= 'survival:well_bottom' then
 			minetest.remove_node(pos)
 			return true
@@ -417,4 +414,13 @@ minetest.register_node('survival:well_top', {
 			end
 		end
 	end,
+})
+
+minetest.register_node('survival:stone_with_salt', {
+	description = 'Salt Ore',
+	tiles = {'default_stone.png^survival_salt_ore.png'},
+	is_ground_content = true,
+	groups = {cracky=3},
+	drop = 'survival:salt_lump',
+	sounds = default.node_sound_stone_defaults(),
 })

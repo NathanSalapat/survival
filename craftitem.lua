@@ -9,3 +9,12 @@ minetest.register_craftitem('survival:bucket_sap', {
 	stack_max = 1,
 })
 
+minetest.register_craftitem('survival:salt_lump', {
+	description = 'chunk of salt',
+	inventory_image = 'survival_salt_lump.png'
+})
+
+minetest.register_craftitem('survival:salt', {
+	description = 'salt',
+	inventory_image = 'survival_salt.png'
+})

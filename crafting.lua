@@ -125,6 +125,12 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+		type = 'shapeless',
+		output = 'survival:salt 9',
+		recipe = {'survival:salt_lump'}
+})
+
+minetest.register_craft({
 		type = 'cooking',
 		output = 'survival:slug_cooked',
 		recipe = 'survival:slug_raw',

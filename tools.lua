@@ -10,7 +10,7 @@ minetest.register_tool('survival:machete_wood', {
 			choppy = {times = {[2]=3.00, [3]=1.60}, uses=10, maxlevel=1}, --woody
 			snappy = {times = {[2]=1.6, [3]=0.40}, uses=10, maxlevel=1},
 		},
-		damage_groups = {fleshy=2}, --damage delt to mobs and other players?
+		damage_groups = {fleshy=2}, --damage dealt to mobs and other players?
 	},
 })
 
