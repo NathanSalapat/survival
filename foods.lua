@@ -1,10 +1,10 @@
 minetest.register_craftitem('survival:slug_raw', {
 	description = 'slug',
 	inventory_image = 'survival_slug_raw.png',
-	on_use = function(player)
+	on_use = function(itemstack, user, pointed_thing)
 		local hp_gain = math.random(-4,1)
-		local hp = player:get_hp()
-		player:set_hp(hp + hp_gain)
+      local eat_func = minetest.item_eat(hg_gain)
+		return eat_func(itemstack, user, pointed_thing)
 	end
 })
 

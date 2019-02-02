@@ -92,7 +92,7 @@ minetest.register_node('survival:spigot', {
 		fixed = {-.35, -.2, 0, .35, .5, .5}, -- Right, Bottom, Back, Left, Top, Front
 		},
     on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		inv:set_size('main', 8*4)
 		inv:set_size('sap', 1)
@@ -104,7 +104,7 @@ minetest.register_node('survival:spigot', {
 		meta:set_string('infotext', 'Sap Spigot')
 	end,
 	on_timer = function(pos, elapsed)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('sap', 'bucket:bucket_empty') then --make sure the bucket is still there
@@ -115,7 +115,7 @@ minetest.register_node('survival:spigot', {
 		end
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('sap', 'bucket:bucket_empty') then
@@ -125,7 +125,7 @@ minetest.register_node('survival:spigot', {
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local timer = minetest.get_node_timer(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string('infotext', 'You need a bucket to collect sap.')
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
@@ -317,7 +317,7 @@ minetest.register_node('survival:well_bottom', {
 		end
 		minetest.set_node(pos,{name = 'air'})
 		minetest.set_node({x=pos.x, y=pos.y+1, z=pos.z},{name = 'survival:well_bottom', param2=n.param2})
-		
+
 	end,
 	})
 
@@ -349,7 +349,7 @@ minetest.register_node('survival:well_top', {
 		end
 	end,
 	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		inv:set_size('main', 8*4)
 		inv:set_size('pail', 1)
@@ -361,7 +361,7 @@ minetest.register_node('survival:well_top', {
 		meta:set_string('infotext', 'Well')
 	end,
 	on_timer = function(pos, elapsed)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('pail', 'bucket:bucket_empty') then --make sure the bucket is still there
@@ -372,23 +372,29 @@ minetest.register_node('survival:well_top', {
 			inv:set_stack('pail', 1,({name='thirsty:steel_canteen', wear=1,}))
 			timer:stop()
 			return
+      elseif inv:contains_item('pail', 'thirsty:bronze_canteen') then --make sure the canteen is still there
+         inv:set_stack('pail', 1,({name='thirsty:bronze_canteen', wear=1,}))
+         timer:stop()
+         return
 		end
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local timer = minetest.get_node_timer(pos)
 		if inv:contains_item('pail', 'bucket:bucket_empty') then
 			timer:start(7)
 		elseif inv:contains_item('pail', 'thirsty:steel_canteen') then
 			timer:start(6)
+      elseif inv:contains_item('pail', 'thirsty:bronze_canteen') then
+         timer:start(10)
 		end
 	end,
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local chance = math.random(1,2)
 		if chance == 2 then
 		-- Let's change the formspec'
-			local meta = minetest.env:get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 			inv:set_size('main', 8*4)
 			inv:set_size('pail', 0)
@@ -409,6 +415,8 @@ minetest.register_node('survival:well_top', {
 				return 1
 			elseif stack:get_name() == ('thirsty:steel_canteen') then
 				return 1
+         elseif stack:get_name() == ('thirsty:bronze_canteen') then
+            return 1
 			else
 				return 0
 			end

@@ -2,7 +2,7 @@
 Nathan
 
 # Survival
-This is a Minetest mod that adds survival related items
+Adds several survival related items.
 
 ## Forum Topic
 https://forum.minetest.net/viewtopic.php?f=9&t=11517

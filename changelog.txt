@@ -1,3 +1,8 @@
+2-01-19:
+Adds support for the bronze canteen.
+Restricted the amount of the sand_with_food the ABM will place.
+Updated some depreciated code calls.
+
 5-11-15:
 Removed the drinking parts of code, the thirsty mod does a great job, just use that if you want drinking.
 Updated the readme and cleaned up stray print code from debugging.
@@ -10,7 +15,7 @@ Wells added, they require a hole in the ground three nodes deep to be placed on 
 
 4-11-15:
 Spigots are working!!! They can only be placed on tree trunks, and need a bucket to collect sap. Right now you just have the infotexts to give you statuses. Placing a bucket in the spigot will trigger a timer that will replace the empty bucket with a sap filled bucket. Cook the sap filled bucket to get sugar. Collection and cooking times will probably be tweaked yet. I want to add a graphic to the spigot that shows whether the bucket is placed and is empty or full, but I don't know if I can do that without creating three nodes. Updated the spigot model and texture.
-Crafting recipe is 
+Crafting recipe is
 c
 cs
 c s where c is clay and s is group stick

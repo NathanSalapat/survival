@@ -6,7 +6,7 @@ minetest.register_abm({
 	action = function(pos, node)
 		local name = minetest.get_node(pos).name
 		if name == "default:sand" then
-			if minetest.find_node_near(pos, 3, {"group:water"}) == nil then
+         if minetest.find_node_near(pos, 3, {"survival:sand_with_food"}) ~= nil then
 				return
 			end
 		minetest.set_node(pos, {name='survival:sand_with_food'})
