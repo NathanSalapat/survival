@@ -74,8 +74,8 @@ minetest.register_craft({
 minetest.register_craft({
 		output = 'survival:leafy_bed 1',
 		recipe = {
-		{'default:leaves', '', 'default:leaves'},
-		{'default:leaves', 'default:leaves', 'default:leaves'}
+		{'group:leaves', '', 'group:leaves'},
+		{'group:leaves', 'group:leaves', 'group:leaves'}
 		}
 })
 
