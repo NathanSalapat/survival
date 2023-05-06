@@ -1,1 +1,17 @@
-All the graphics and code in this mod are licensed under creative commons 0.
+Tim79000 Licensed MIT
+    cooked_kabob.png
+    energy_bar.png
+    machete_bronze.png
+    machete_diamond.png
+    machete_mese.png
+    machete_steel.png
+    machete_wood.png
+    mussel_cooked.png
+    mussel_raw.png
+    oyster_cooked.png
+    oyster_raw.png
+    raw_kabob.png
+    work_cooked.png
+    worm_raw.png
+
+All other graphics and code in this mod are licensed under creative commons 0.
